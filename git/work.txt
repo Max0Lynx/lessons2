@@ -1,0 +1,30 @@
+$data = $_POST;
+
+if(isset($data['forgot'])){
+    $name = $data['name'];
+    $phone = $data['phone'];
+    $message = $data['message'];
+    $mail=new PHPMailer\PHPMailer\PHPMailer();
+    $mail->CharSet='utf-8';
+    $mail->isSMTP();
+    $mail->Host = 'smtp.mail.ru';
+    $mail->SMTPAuth = true;
+    $mail->Username='katt_podbor@mail.ru';
+    $mail->Password='DtijjV8g91jUgLfkCiyC';
+    $mail->SMTPSecure='ssl';
+    $mail->Port = 465;
+
+    $mail->setFrom('katt_podbor@mail.ru');
+    $mail->addAddress("zloyhomyak1999@gmail.com");
+    $mail->isHTML(true);
+
+    $mail->Subject ='Новая заявка!';
+    $mail->Body = "Клиент " .$name.  " оставил заявку: " .$message. " | Его номер телефона: "  .$phone. "";
+    $mail->AltBody="";
+    if(!$mail->send())
+    {
+        echo "Что-то пошло не так";
+    }else{
+        header('Location: callback-after.html');
+    }
+}
